@@ -12,10 +12,10 @@ export class PostsService {
     return `Post ${id}`;
   }
   updatePostById(id: string, body: any) {
-    return `Updated post ${id} `;
+    return `Updated post ${id} ${body} `;
   }
 
   deletePost(id: string) {
-    return `Delete post ${id}`;
+    return `Delete post ${id}  `;
   }
 }

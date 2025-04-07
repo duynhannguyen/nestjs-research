@@ -8,17 +8,27 @@ import {
   Put,
 } from '@nestjs/common';
 import { PostsService } from './posts.service';
+import { PrismaService } from 'src/shared/services/prisma.service';
 
 @Controller('posts')
 export class PostsController {
-  constructor(private readonly postService: PostsService) {}
+  constructor(
+    private readonly postService: PostsService,
+    private readonly prismaService: PrismaService,
+  ) {}
   @Get()
   getPosts() {
-    return this.postService.getPosts();
+    return this.prismaService.post.findMany();
   }
   @Post()
   createPost(@Body() body: any) {
-    return this.postService.createPosts(body);
+    return this.prismaService.post.create({
+      data: {
+        title: body.title,
+        content: body.content,
+        authorId: 1,
+      },
+    });
   }
 
   @Get(':id')
