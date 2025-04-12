@@ -1,11 +1,15 @@
 import { Exclude, Type } from 'class-transformer';
-import { IsString } from 'class-validator';
+import { IsString, Length } from 'class-validator';
 import { successResDto } from 'shared.dto';
+import { Match } from 'src/shared/decorators/custom-validator.decorator';
 
 export class LoginBodyDTO {
   @IsString()
   email: string;
   @IsString()
+  @Length(6, 20, {
+    message: 'Password must be between 6 and 20 characters long.',
+  })
   password: string;
 }
 export class LoginResDTO {
@@ -19,6 +23,7 @@ export class RegisterBodyDTO extends LoginBodyDTO {
   @IsString()
   name: string;
   @IsString()
+  @Match('confirmPassword')
   confirmPassword: string;
 }
 export class RegisterResData {
