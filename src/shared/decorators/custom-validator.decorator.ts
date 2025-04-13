@@ -16,11 +16,7 @@ export function Match(property: string, validationOptions?: ValidationOptions) {
         validate(value: any, args: ValidationArguments) {
           const [relatedPropertyName] = args.constraints;
           const relatedValue = (args.object as any)[relatedPropertyName];
-          return (
-            typeof value === 'string' &&
-            typeof relatedValue === 'string' &&
-            value.length > relatedValue.length
-          );
+          return value === relatedValue;
         },
         defaultMessage(args: ValidationArguments) {
           const [relatedPropertyName] = args.constraints;

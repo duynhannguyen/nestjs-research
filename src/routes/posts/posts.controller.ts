@@ -6,9 +6,12 @@ import {
   Param,
   Post,
   Put,
+  UseGuards,
 } from '@nestjs/common';
 import { PostsService } from './posts.service';
 import { PrismaService } from 'src/shared/services/prisma.service';
+import { ApiKeyGuard } from 'src/shared/guards/api-key-guard';
+import { AccessTokenGuard } from 'src/shared/guards/access-token-guard';
 
 @Controller('posts')
 export class PostsController {
@@ -16,6 +19,9 @@ export class PostsController {
     private readonly postService: PostsService,
     private readonly prismaService: PrismaService,
   ) {}
+  // @UseGuards(ApiKeyGuard)
+  @UseGuards(AccessTokenGuard)
+  @UseGuards(ApiKeyGuard)
   @Get()
   getPosts() {
     return this.prismaService.post.findMany();
