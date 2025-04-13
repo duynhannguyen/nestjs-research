@@ -13,9 +13,11 @@ import { PrismaService } from 'src/shared/services/prisma.service';
 import { Auth } from 'src/shared/decorators/auth.decorator';
 import { AuthType, conditionGuard } from 'src/shared/constants/auth.constants';
 import { AuthenticatedGuard } from 'src/shared/guards/authentication-guards';
+import { Roles } from 'src/shared/decorators/role.decorator';
+import { roles } from 'src/shared/constants/roles.constans';
+import { RolesGuard } from 'src/shared/guards/role.guard';
 // import { ApiKeyGuard } from 'src/shared/guards/api-key-guard';
 // import { AccessTokenGuard } from 'src/shared/guards/access-token-guard';
-
 @Controller('posts')
 export class PostsController {
   constructor(
@@ -25,8 +27,10 @@ export class PostsController {
   // @UseGuards(AccessTokenGuard)
   // @UseGuards(ApiKeyGuard)
   // @Auth([AuthType.Bearer, AuthType.ApiKey], { condition: conditionGuard.Or })
-  @UseGuards(AuthenticatedGuard)
+  // @UseGuards(AuthenticatedGuard)
   @Get()
+  @Roles([roles.Admin])
+  @UseGuards(RolesGuard)
   getPosts() {
     return this.prismaService.post.findMany();
   }
