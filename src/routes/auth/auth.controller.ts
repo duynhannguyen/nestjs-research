@@ -24,9 +24,7 @@ export class AuthController {
   @SerializeOptions({ type: RegisterResDTO })
   @Post('register')
   async register(@Body() body: RegisterBodyDTO) {
-    console.log('controller...');
     const result = await this.authService.register(body);
-    // return new RegisterResDTO(result);
     return result;
   }
   @Post('login')
